@@ -1,4 +1,5 @@
 # app/main.py
+# Initial setup by Shahmeer Ahmad Bhatti
 
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
