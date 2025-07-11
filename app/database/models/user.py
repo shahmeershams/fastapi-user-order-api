@@ -1,7 +1,7 @@
 # app/models/user.py
 
 from sqlalchemy import Column, Integer, String, TIMESTAMP, func
-from app.database.session import Base
+from app.config.database import Base
 
 class User(Base):
     __tablename__ = "users"  # This will be the table name in PostgreSQL

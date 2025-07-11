@@ -1,11 +1,11 @@
-# app/routers/ping.py
-
 from fastapi import APIRouter
 
-# Create a router instance
 router = APIRouter()
 
-# Define a GET endpoint at /ping
+@router.get("/")
+def root_check():
+    return {"message": "API is running!"}
+
 @router.get("/ping")
 def ping():
     return {"message": "pong"}

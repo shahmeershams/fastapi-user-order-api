@@ -1,7 +1,7 @@
 # app/models/order.py
 
 from sqlalchemy import Column, Integer, ForeignKey, TIMESTAMP, Numeric, String, func
-from app.database.session import Base
+from app.config.database import Base
 
 class Order(Base):
     __tablename__ = "orders"  # This will be the table name in PostgreSQL
