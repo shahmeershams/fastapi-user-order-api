@@ -1,4 +1,4 @@
-# app/enums/order_status.py
+# app/validators/order.py
 
 from enum import Enum
 

@@ -11,8 +11,7 @@ venv/
 *.pid
 *.log
 
-# Alembic
-alembic/
+# Note: alembic folder is now at app/database/alembic/ and should be included in Git
 
 # VSCode
 .vscode/

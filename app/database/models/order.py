@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, TIMESTAMP, Numeric, String, func, Enum
 from sqlalchemy.orm import relationship
 from app.config.database import Base
-from app.enums.order_status import OrderStatus
+from app.validators.order import OrderStatus
 
 class Order(Base):
     """
