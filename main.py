@@ -6,8 +6,7 @@ from app.routers import (
     users_router, 
     orders_router,
     roles_router,
-    permissions_router,
-    role_permissions_router
+    permissions_router
 )
 
 app = FastAPI(
@@ -22,7 +21,6 @@ app.include_router(users_router)
 app.include_router(orders_router)
 app.include_router(roles_router)
 app.include_router(permissions_router)
-app.include_router(role_permissions_router)
 
 
 

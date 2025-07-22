@@ -5,13 +5,11 @@ from .users import router as users_router
 from .orders import router as orders_router
 from .roles import router as roles_router
 from .permissions import router as permissions_router
-from .role_permissions import router as role_permissions_router
 
 __all__ = [
     "ping_router",
     "users_router", 
     "orders_router",
     "roles_router",
-    "permissions_router",
-    "role_permissions_router"
+    "permissions_router"
 ]
