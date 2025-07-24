@@ -5,12 +5,18 @@ from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.services import RoleService
 from app.validators import RoleCreate, RoleUpdate, RoleResponse, RoleListResponse
+from app.dependencies import require_admin
+from app.database.models import User
 from typing import List
 
 router = APIRouter(prefix="/roles", tags=["roles"])
 
 @router.post("/", response_model=RoleResponse, status_code=status.HTTP_201_CREATED)
-def create_role(role: RoleCreate, db: Session = Depends(get_db)):
+def create_role(
+    role: RoleCreate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Create a new role.
     
@@ -21,7 +27,10 @@ def create_role(role: RoleCreate, db: Session = Depends(get_db)):
     return RoleService.create_role(db, role)
 
 @router.get("/", response_model=RoleListResponse)
-def list_roles(db: Session = Depends(get_db)):
+def list_roles(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Get all roles in the system.
     
@@ -30,7 +39,11 @@ def list_roles(db: Session = Depends(get_db)):
     return RoleService.list_roles(db)
 
 @router.get("/{role_id}", response_model=RoleResponse)
-def get_role(role_id: int, db: Session = Depends(get_db)):
+def get_role(
+    role_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Get a specific role by ID.
     
@@ -39,7 +52,12 @@ def get_role(role_id: int, db: Session = Depends(get_db)):
     return RoleService.get_role(db, role_id)
 
 @router.put("/{role_id}", response_model=RoleResponse)
-def update_role(role_id: int, role_update: RoleUpdate, db: Session = Depends(get_db)):
+def update_role(
+    role_id: int, 
+    role_update: RoleUpdate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Update a role's information.
     
@@ -49,7 +67,11 @@ def update_role(role_id: int, role_update: RoleUpdate, db: Session = Depends(get
     return RoleService.update_role(db, role_id, role_update)
 
 @router.delete("/{role_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_role(role_id: int, db: Session = Depends(get_db)):
+def delete_role(
+    role_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Delete a role.
     
@@ -61,7 +83,11 @@ def delete_role(role_id: int, db: Session = Depends(get_db)):
     return None
 
 @router.get("/{role_id}/permissions", response_model=List[dict])
-def get_role_permissions(role_id: int, db: Session = Depends(get_db)):
+def get_role_permissions(
+    role_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Get all permissions assigned to a specific role.
     
@@ -71,7 +97,12 @@ def get_role_permissions(role_id: int, db: Session = Depends(get_db)):
     return [{"permission_id": p.permission_id, "name": p.name, "key": p.key, "description": p.description} for p in permissions]
 
 @router.post("/{role_id}/permissions/{permission_id}", status_code=status.HTTP_204_NO_CONTENT)
-def assign_permission_to_role(role_id: int, permission_id: int, db: Session = Depends(get_db)):
+def assign_permission_to_role(
+    role_id: int, 
+    permission_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Assign a permission to a role.
     
@@ -82,7 +113,12 @@ def assign_permission_to_role(role_id: int, permission_id: int, db: Session = De
     return None
 
 @router.delete("/{role_id}/permissions/{permission_id}", status_code=status.HTTP_204_NO_CONTENT)
-def remove_permission_from_role(role_id: int, permission_id: int, db: Session = Depends(get_db)):
+def remove_permission_from_role(
+    role_id: int, 
+    permission_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Remove a permission from a role.
     

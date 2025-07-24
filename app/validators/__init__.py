@@ -2,8 +2,12 @@
 
 # Import all validators to make them available
 from .user import (
-    UserBase, UserCreate, UserUpdate, UserResponse,
+    UserBase, UserCreate, UserLogin, UserUpdate, UserResponse,
     UserWithOrdersResponse, UserProfileResponse, UserListResponse
+)
+from .auth import (
+    TokenResponse, RefreshTokenRequest, LogoutRequest, CurrentUserResponse,
+    PasswordChangeRequest, PasswordResetRequest, TokenValidationResponse
 )
 from .role import (
     RoleBase, RoleCreate, RoleUpdate, RoleResponse,
@@ -17,12 +21,16 @@ from .order import (
     OrderStatus, OrderBase, OrderCreate, OrderUpdate, OrderResponse,
     OrderWithUserResponse, OrderListResponse, OrderStatusUpdate
 )
-# Auth validators removed for now - will be added later
+# Auth validators now included
 
 __all__ = [
     # User models
-    "UserBase", "UserCreate", "UserUpdate", "UserResponse",
+    "UserBase", "UserCreate", "UserLogin", "UserUpdate", "UserResponse",
     "UserWithOrdersResponse", "UserProfileResponse", "UserListResponse",
+    
+    # Auth models
+    "TokenResponse", "RefreshTokenRequest", "LogoutRequest", "CurrentUserResponse",
+    "PasswordChangeRequest", "PasswordResetRequest", "TokenValidationResponse",
     
     # Role models
     "RoleBase", "RoleCreate", "RoleUpdate", "RoleResponse",
@@ -36,5 +44,4 @@ __all__ = [
     "OrderStatus", "OrderBase", "OrderCreate", "OrderUpdate", "OrderResponse",
     "OrderWithUserResponse", "OrderListResponse", "OrderStatusUpdate",
     
-    # Auth models - removed for now
 ]
