@@ -5,11 +5,17 @@ from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.services import PermissionService
 from app.validators import PermissionCreate, PermissionUpdate, PermissionResponse, PermissionListResponse
+from app.dependencies import require_admin
+from app.database.models import User
 
 router = APIRouter(prefix="/permissions", tags=["permissions"])
 
 @router.post("/", response_model=PermissionResponse, status_code=status.HTTP_201_CREATED)
-def create_permission(permission: PermissionCreate, db: Session = Depends(get_db)):
+def create_permission(
+    permission: PermissionCreate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Create a new permission.
     
@@ -20,7 +26,10 @@ def create_permission(permission: PermissionCreate, db: Session = Depends(get_db
     return PermissionService.create_permission(db, permission)
 
 @router.get("/", response_model=PermissionListResponse)
-def list_permissions(db: Session = Depends(get_db)):
+def list_permissions(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Get all permissions in the system.
     
@@ -29,7 +38,11 @@ def list_permissions(db: Session = Depends(get_db)):
     return PermissionService.list_permissions(db)
 
 @router.get("/{permission_id}", response_model=PermissionResponse)
-def get_permission(permission_id: int, db: Session = Depends(get_db)):
+def get_permission(
+    permission_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Get a specific permission by ID.
     
@@ -38,7 +51,12 @@ def get_permission(permission_id: int, db: Session = Depends(get_db)):
     return PermissionService.get_permission(db, permission_id)
 
 @router.put("/{permission_id}", response_model=PermissionResponse)
-def update_permission(permission_id: int, permission_update: PermissionUpdate, db: Session = Depends(get_db)):
+def update_permission(
+    permission_id: int, 
+    permission_update: PermissionUpdate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Update a permission's information.
     
@@ -48,7 +66,11 @@ def update_permission(permission_id: int, permission_update: PermissionUpdate, d
     return PermissionService.update_permission(db, permission_id, permission_update)
 
 @router.delete("/{permission_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_permission(permission_id: int, db: Session = Depends(get_db)):
+def delete_permission(
+    permission_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
     """
     Delete a permission.
     

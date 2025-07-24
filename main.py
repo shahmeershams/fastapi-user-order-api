@@ -6,7 +6,8 @@ from app.routers import (
     users_router, 
     orders_router,
     roles_router,
-    permissions_router
+    permissions_router,
+    auth_router
 )
 
 app = FastAPI(
@@ -17,6 +18,7 @@ app = FastAPI(
 
 # Register all routers
 app.include_router(ping_router)
+app.include_router(auth_router)  # Auth router first for better documentation order
 app.include_router(users_router)
 app.include_router(orders_router)
 app.include_router(roles_router)
